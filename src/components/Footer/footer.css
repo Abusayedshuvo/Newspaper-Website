@@ -1,0 +1,15 @@
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.social {
+  padding: 20px 0;
+}
+
+.social svg {
+  margin: 0 10px;
+  font-size: 40px;
+}
