@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./Pages/ErrorPage.jsx";
 import Theme from "./components/Theme/Theme.jsx";
 import Home from "./Pages/Home.jsx";
+import AddArticle from "./Pages/AddArticle.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,17 +17,17 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
+      {
+        path: "/add-articles",
+        element: <AddArticle></AddArticle>,
+      },
     ],
   },
 ]);
 
-const fontFamily = {
-  fontFamily: "Helvetica Neue",
-};
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Theme style={fontFamily}>
+    <Theme>
       <RouterProvider router={router} />
     </Theme>
   </React.StrictMode>
