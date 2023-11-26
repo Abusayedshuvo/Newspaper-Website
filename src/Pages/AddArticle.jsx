@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import { Button, Container, Grid, TextField } from "@mui/material";
-import "./AddArticle.css";
+import "./css/AddArticle.css";
 import ReactSelect from "../components/ReactSelect/ReactSelect";
 import Publisher from "../components/ReactSelect/Publisher";
 import { useState } from "react";

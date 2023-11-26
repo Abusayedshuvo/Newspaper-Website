@@ -24,7 +24,7 @@ const linkStyle = {
 
 const navLinks = (
   <div>
-    <Link style={linkStyle} to="/home">
+    <Link style={linkStyle} to="/">
       Home
     </Link>
     <Link style={linkStyle} to="/add-articles">
@@ -33,7 +33,7 @@ const navLinks = (
     <Link style={linkStyle} to="/all-articles">
       All Articles
     </Link>
-    <Link style={linkStyle} to="/all-articles">
+    <Link style={linkStyle} to="/subscription">
       Subscription
     </Link>
   </div>
