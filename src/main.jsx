@@ -11,6 +11,9 @@ import AllArticles from "./Pages/AllArticles.jsx";
 // tanstack Query
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ArticleDetails from "./Pages/ArticleDetails.jsx";
+import Login from "./Pages/Login.jsx";
+import SingUp from "./Pages/SingUp.jsx";
+import AuthProvider from "./context/AuthProvider.jsx";
 // Create a client
 const queryClient = new QueryClient();
 
@@ -36,16 +39,26 @@ const router = createBrowserRouter([
         path: "/articles/:id",
         element: <ArticleDetails></ArticleDetails>,
       },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/singup",
+        element: <SingUp></SingUp>,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Theme>
-        <RouterProvider router={router} />
-      </Theme>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Theme>
+          <RouterProvider router={router} />
+        </Theme>
+      </QueryClientProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
