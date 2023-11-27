@@ -6,21 +6,21 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import Loading from "../../components/Loading/Loading";
 import { Helmet } from "react-helmet";
 import { Container, Grid } from "@mui/material";
-import AllUsersTable from "../../components/Dashboard/AllUsersTable";
-import useAxiosPublic from "../../Hook/useAxiosPublic";
+import ArticlesTable from "../../components/Dashboard/ArticlesTable";
 
-const AllUsers = () => {
-  const axiosPublic = useAxiosPublic();
-  const getUsers = async () => {
-    const res = await axiosPublic.get(`/users`);
+const Articles = () => {
+  const axiosSecure = useAxiosSecure();
+  const getArticles = async () => {
+    const res = await axiosSecure.get(`/articles`);
     return res;
   };
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: getUsers,
+    queryKey: ["articles"],
+    queryFn: getArticles,
   });
 
   if (isLoading) {
@@ -30,7 +30,7 @@ const AllUsers = () => {
   return (
     <>
       <Helmet>
-        <title> Synergy Press || Dashboard || All Users</title>
+        <title> Synergy Press || Dashboard || All Articles</title>
       </Helmet>
       <Container>
         {data?.data?.length > 0 ? (
@@ -41,17 +41,22 @@ const AllUsers = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell> Name</TableCell>
-                      <TableCell align="right">Email</TableCell>
-                      <TableCell align="right"> Profile </TableCell>
-                      <TableCell align="right">Action</TableCell>
+                      <TableCell>Article Title</TableCell>
+                      <TableCell> Author Name </TableCell>
+                      <TableCell>Author Email</TableCell>
+                      <TableCell>Author Photo</TableCell>
+                      <TableCell>Posted Date</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Publisher</TableCell>
+                      <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
-                  {data?.data?.map((users) => (
-                    <AllUsersTable
-                      key={users._id}
-                      users={users}
+                  {data?.data?.map((articles) => (
+                    <ArticlesTable
+                      key={articles._id}
+                      articles={articles}
                       refetch={refetch}
-                    ></AllUsersTable>
+                    ></ArticlesTable>
                   ))}
                 </Table>
               </TableContainer>
@@ -59,7 +64,7 @@ const AllUsers = () => {
           </>
         ) : (
           <>
-            <p className=" text-center">No Users Available</p>
+            <p className=" text-center">Articles Not Available</p>
           </>
         )}
       </Container>
@@ -67,4 +72,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default Articles;

@@ -1,5 +1,6 @@
 import Select from "react-select";
 import PropTypes from "prop-types";
+import { FormHelperText } from "@mui/material";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -10,6 +11,7 @@ const options = [
 export default function ReactSelect({ setTags, tags }) {
   return (
     <div className="App">
+      <FormHelperText> Select Tags </FormHelperText>
       <Select
         isMulti
         defaultValue={tags}

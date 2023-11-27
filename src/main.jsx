@@ -16,6 +16,8 @@ import SingUp from "./Pages/SingUp.jsx";
 import AuthProvider from "./context/AuthProvider.jsx";
 import Dashboard from "./Pages/Dashboard/dashboard.jsx";
 import AllUsers from "./Pages/Dashboard/AllUsers.jsx";
+import Articles from "./Pages/Dashboard/Articles.jsx";
+import AddPublisher from "./Pages/Dashboard/AddPublisher.jsx";
 // Create a client
 const queryClient = new QueryClient();
 
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "articles",
+        element: <Articles></Articles>,
+      },
+      {
+        path: "publisher",
+        element: <AddPublisher></AddPublisher>,
       },
     ],
   },
