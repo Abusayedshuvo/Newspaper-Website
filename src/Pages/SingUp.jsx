@@ -5,10 +5,11 @@ import { updateProfile } from "firebase/auth";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { GitHub, Google } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../Hook/useAxiosPublic";
 
 const SingUp = () => {
+  const axiosPublic = useAxiosPublic();
   const { googleLogin, githubLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const { createUser } = useContext(AuthContext);
@@ -22,13 +23,13 @@ const SingUp = () => {
     const password = form.password.value;
     const photo = form.photo.value;
 
-    if (password.length < 6) {
-      setError("Password at least 6 charter");
-      return;
-    } else if (!/^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/.test(password)) {
-      setError("Password need a capital letter and a special character");
-      return;
-    }
+    // if (password.length < 6) {
+    //   setError("Password at least 6 charter");
+    //   return;
+    // } else if (!/^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/.test(password)) {
+    //   setError("Password need a capital letter and a special character");
+    //   return;
+    // }
     setError("");
     createUser(email, password)
       .then((result) => {
@@ -37,6 +38,26 @@ const SingUp = () => {
         updateProfile(result.user, {
           displayName: name,
           photoURL: photo,
+        });
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          photo: result?.user?.photoURL,
+        };
+        console.log(result.user.displayName);
+        console.log(result.user);
+
+        axiosPublic.post("/users", userInfo).then((data) => {
+          if (data.status) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User Added Successful",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            form.reset();
+          }
         });
       })
       .catch((error) => {
@@ -49,6 +70,23 @@ const SingUp = () => {
       .then((data) => {
         Swal.fire("Google Login Success!", "", "success");
         setError("");
+
+        const userInfo = {
+          name: data?.user?.displayName,
+          email: data?.user?.email,
+        };
+        axiosPublic.post("/users", userInfo).then((data) => {
+          console.log(data);
+          if (data.status) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User Added Successful",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
         // jwt token
         const email = data.user.email;
         const user = { email };
@@ -66,9 +104,25 @@ const SingUp = () => {
 
   const handleGithub = () => {
     githubLogin()
-      .then(() => {
+      .then((data) => {
         Swal.fire("Github Login Success!", "", "success");
         setError("");
+        const userInfo = {
+          name: data?.user?.displayName,
+          email: data?.user?.email,
+        };
+        axiosPublic.post("/users", userInfo).then((data) => {
+          console.log(data);
+          if (data.status) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User Added Successful",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
@@ -91,7 +145,7 @@ const SingUp = () => {
             <TextField
               type="text"
               name="name"
-              id="outlined-basic"
+              id="name"
               label="Name"
               variant="outlined"
               fullWidth
@@ -99,7 +153,7 @@ const SingUp = () => {
             <TextField
               type="text"
               name="photo"
-              id="outlined-basic"
+              id="photo"
               label="Photo URL"
               variant="outlined"
               fullWidth
@@ -107,7 +161,7 @@ const SingUp = () => {
             <TextField
               type="email"
               name="email"
-              id="outlined-basic"
+              id="email"
               label="Email"
               variant="outlined"
               fullWidth
@@ -115,7 +169,7 @@ const SingUp = () => {
             <TextField
               type="password"
               name="password"
-              id="outlined-basic"
+              id="password"
               label="Password"
               variant="outlined"
               fullWidth
@@ -125,6 +179,10 @@ const SingUp = () => {
               Login
             </Button>
           </form>
+
+          <Typography textAlign="center">
+            Already have an account? <Link to="/singup"> Login Here</Link>
+          </Typography>
           {error && (
             <Typography className="text-red" textAlign="center">
               {error}

@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import "./css/Login.css";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import useAxiosPublic from "../Hook/useAxiosPublic";
 import { AuthContext } from "../context/AuthProvider";
@@ -107,6 +107,11 @@ const Login = () => {
             Login
           </Button>
         </form>
+
+        <Typography textAlign="center">
+          Don't have an account? <Link to="/singup"> Register Here</Link>
+        </Typography>
+
         {error && (
           <Typography className="text-red" textAlign="center">
             {error}
