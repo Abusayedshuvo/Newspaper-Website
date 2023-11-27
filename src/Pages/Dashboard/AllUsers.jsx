@@ -20,7 +20,7 @@ const AllUsers = () => {
     return res;
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
   });
@@ -54,6 +54,7 @@ const AllUsers = () => {
                     <AllUsersTable
                       key={users._id}
                       users={users}
+                      refetch={refetch}
                     ></AllUsersTable>
                   ))}
                 </Table>

@@ -3,9 +3,26 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 import { Button } from "@mui/material";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
+import Swal from "sweetalert2";
 
-const AllUsersTable = ({ users }) => {
-  const { name, email, photo } = users;
+const AllUsersTable = ({ users, refetch }) => {
+  const { _id, name, email, photo } = users;
+  const axiosSecure = useAxiosSecure();
+  const handleMakeAdmin = (_id) => {
+    axiosSecure.patch(`/users/admin/${_id}`).then((res) => {
+      if (res?.data?.user?.role === "admin") {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${res?.data?.user?.name} is admin now`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
   return (
     <>
       <TableBody>
@@ -18,7 +35,11 @@ const AllUsersTable = ({ users }) => {
             <img src={photo} alt="" />
           </TableCell>
           <TableCell align="right">
-            <Button> Make Admin</Button>
+            {users?.role === "admin" ? (
+              "Admin"
+            ) : (
+              <Button onClick={() => handleMakeAdmin(_id)}>Make Admin</Button>
+            )}
           </TableCell>
         </TableRow>
       </TableBody>
@@ -30,4 +51,5 @@ export default AllUsersTable;
 
 AllUsersTable.propTypes = {
   users: PropTypes.object,
+  refetch: PropTypes.func,
 };
