@@ -5,7 +5,16 @@ import PropTypes from "prop-types";
 import { Button } from "@mui/material";
 
 const ArticlesTable = ({ articles }) => {
-  const { _id, title, publishe } = articles;
+  const {
+    _id,
+    title,
+    publishe,
+    status,
+    postedDate,
+    authorName,
+    authorEmail,
+    authorPhoto,
+  } = articles;
   const handleDelete = () => {
     console.log("Delete");
   };
@@ -17,15 +26,14 @@ const ArticlesTable = ({ articles }) => {
           <TableCell component="th" scope="row">
             {title}
           </TableCell>
-          <TableCell>{publishe}</TableCell>
+          <TableCell>{authorName}</TableCell>
+          <TableCell>{authorEmail}</TableCell>
           <TableCell>
-            <img src="" alt="" />
+            <img src={authorPhoto} alt={authorName} />
           </TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
+          <TableCell>{postedDate}</TableCell>
+          <TableCell>{status}</TableCell>
+          <TableCell>{publishe}</TableCell>
           <TableCell>
             <Button onClick={() => handleDelete(_id)}>Delete</Button>
             <Button onClick={() => handleDelete(_id)}>Approve</Button>

@@ -40,7 +40,6 @@ const Articles = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell> Name</TableCell>
                       <TableCell>Article Title</TableCell>
                       <TableCell> Author Name </TableCell>
                       <TableCell>Author Email</TableCell>

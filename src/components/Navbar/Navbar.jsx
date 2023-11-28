@@ -8,11 +8,13 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
+import useAdmin from "../../Hook/useAdmin";
+import useAuth from "../../Hook/useAuth";
+import { Button } from "@mui/material";
+import Swal from "sweetalert2";
 
 const linkStyle = {
   color: "#fff",
@@ -22,43 +24,53 @@ const linkStyle = {
   fontWeight: "400",
 };
 
-const navLinks = (
-  <div>
-    <Link style={linkStyle} to="/">
-      Home
-    </Link>
-    <Link style={linkStyle} to="/add-articles">
-      Add Articles
-    </Link>
-    <Link style={linkStyle} to="/all-articles">
-      All Articles
-    </Link>
-    <Link style={linkStyle} to="/subscription">
-      Subscription
-    </Link>
-  </div>
-);
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 function Navbar() {
+  const [isAdmin] = useAdmin();
+  const { user, logOut } = useAuth();
+  const navLinks = (
+    <div>
+      <Link style={linkStyle} to="/">
+        Home
+      </Link>
+      <Link style={linkStyle} to="/add-articles">
+        Add Articles
+      </Link>
+      <Link style={linkStyle} to="/all-articles">
+        All Articles
+      </Link>
+      <Link style={linkStyle} to="/subscription">
+        Subscription
+      </Link>
+      <Link style={linkStyle} to="/premium-articles">
+        Premium Articles
+      </Link>
+      {isAdmin ? (
+        <Link style={linkStyle} to="/dashboard">
+          Dashboard
+        </Link>
+      ) : (
+        ""
+      )}
+    </div>
+  );
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => Swal.fire("Log out Success!", "", "success"))
+      .then((error) => {
+        console.log(error);
+      });
   };
-
   return (
     <AppBar sx={{ backgroundColor: "#d60000" }} position="static">
       <Container maxWidth="xl">
@@ -125,37 +137,20 @@ function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Link style={linkStyle} to="/login">
-              Login
-            </Link>
-
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {user ? (
+              <>
+                <Link to="/profile">
+                  <Avatar alt={user?.displayName} src={user?.photoURL} />
+                </Link>
+                <Button onClick={handleLogOut} style={linkStyle}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link style={linkStyle} to="/login">
+                Login
+              </Link>
+            )}
           </Box>
         </Toolbar>
       </Container>

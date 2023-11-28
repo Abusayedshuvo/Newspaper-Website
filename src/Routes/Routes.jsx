@@ -12,6 +12,7 @@ import AllUsers from "../Pages/Dashboard/AllUsers.jsx";
 import Articles from "../Pages/Dashboard/Articles.jsx";
 import AddPublisher from "../Pages/Dashboard/AddPublisher.jsx";
 import PrivateRoutes from "../Routes/PrivateRoutes.jsx";
+import AdminRoutes from "./AdminRoutes.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -51,15 +52,27 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoutes>
+        <Dashboard></Dashboard>
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "users",
-        element: <AllUsers></AllUsers>,
+        element: (
+          <AdminRoutes>
+            <AllUsers></AllUsers>
+          </AdminRoutes>
+        ),
       },
       {
         path: "articles",
-        element: <Articles></Articles>,
+        element: (
+          <AdminRoutes>
+            <Articles></Articles>
+          </AdminRoutes>
+        ),
       },
       {
         path: "publisher",
