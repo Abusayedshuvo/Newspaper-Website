@@ -1,28 +1,61 @@
 import { Helmet } from "react-helmet";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-import { Button, Container, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  Container,
+  FormHelperText,
+  Grid,
+  TextField,
+} from "@mui/material";
 import "./css/AddArticle.css";
 import ReactSelect from "../components/ReactSelect/ReactSelect";
 import Publisher from "../components/ReactSelect/Publisher";
 import { useState } from "react";
 import useAxiosPublic from "../Hook/useAxiosPublic";
 import Swal from "sweetalert2";
+import { imageUpload } from "../Hook/imageUplode";
+import useAuth from "../Hook/useAuth";
 
 const AddArticle = () => {
   const axiosPublic = useAxiosPublic();
   const [publisher, setPublisher] = useState(null);
   const [tags, setTags] = useState(null);
+  const { user } = useAuth();
 
-  const handleAddArticle = (event) => {
+  const status = "pending";
+  const postedDate = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  const authorName = user?.displayName;
+  const authorEmail = user?.email;
+  const authorPhoto = user?.photoURL;
+
+  console.log(typeof postedDate);
+  const handleAddArticle = async (event) => {
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
-    const image = form.image.value;
     const publishe = publisher.value;
     const tag = tags;
     const description = form.description.value;
-
-    const addArticles = { title, publishe, tag, description, image };
+    const image = form.image.files[0];
+    const imageData = await imageUpload(image);
+    const imageUrl = imageData.display_url;
+    const addArticles = {
+      title,
+      publishe,
+      tag,
+      description,
+      imageUrl,
+      status,
+      postedDate,
+      authorName,
+      authorEmail,
+      authorPhoto,
+    };
 
     axiosPublic
       .post("/articles", addArticles)
@@ -49,21 +82,27 @@ const AddArticle = () => {
         <form onSubmit={handleAddArticle}>
           <Grid container spacing={2} sx={{ flexGrow: 1 }}>
             <Grid xs={6} item={true}>
+              <FormHelperText> </FormHelperText>
+
               <TextField
                 fullWidth
+                name="title"
+                required
                 id="outlined-basic"
                 label="Title"
-                name="title"
                 variant="outlined"
               />
             </Grid>
             <Grid xs={6} item={true}>
+              <FormHelperText> Add Image </FormHelperText>
               <TextField
                 fullWidth
-                id="outlined-basic"
-                label="Image Url"
-                variant="outlined"
+                type="file"
                 name="image"
+                accept="image/*"
+                required
+                id="outlined-basic"
+                variant="outlined"
               />
             </Grid>
             <Grid xs={6} item={true}>

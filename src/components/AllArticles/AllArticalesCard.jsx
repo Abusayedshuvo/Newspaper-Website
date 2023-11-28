@@ -8,7 +8,7 @@ import { CardMedia, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const AllArticalesCard = ({ article }) => {
-  const { _id, title, publishe, tag, description, image } = article;
+  const { _id, title, publishe, tag, description, imageUrl } = article;
   return (
     <>
       <Grid xs={6} item={true}>
@@ -17,7 +17,7 @@ const AllArticalesCard = ({ article }) => {
             <CardMedia
               component="img"
               height="194"
-              image={image}
+              image={imageUrl}
               alt="Paella dish"
             />
             <CardActions>
