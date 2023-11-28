@@ -44,12 +44,10 @@ function Navbar() {
       <Link style={linkStyle} to="/premium-articles">
         Premium Articles
       </Link>
-      {isAdmin ? (
+      {user && isAdmin && (
         <Link style={linkStyle} to="/dashboard">
           Dashboard
         </Link>
-      ) : (
-        ""
       )}
     </div>
   );

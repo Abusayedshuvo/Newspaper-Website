@@ -7,14 +7,28 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "./style.css";
 
-import img1 from "../../../assets/1.jpeg";
-import img2 from "../../../assets/02.jpg";
-import img3 from "../../../assets/03.jpg";
-import img4 from "../../../assets/04.jpg";
-import img5 from "../../../assets/05.jpg";
-import img6 from "../../../assets/06.jpg";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading/Loading";
+import { Typography } from "@mui/material";
 
 const Trending = () => {
+  const axiosPublic = useAxiosPublic();
+
+  const getArticles = async () => {
+    const res = await axiosPublic.get(`/articles`);
+    return res;
+  };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["articles"],
+    queryFn: getArticles,
+  });
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <>
       <Swiper
@@ -31,24 +45,35 @@ const Trending = () => {
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img src={img1} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={img2} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={img3} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={img4} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={img5} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={img6} alt="" />
-        </SwiperSlide>
+        {data?.data?.length > 0 ? (
+          <>
+            {data?.data?.map((article) => (
+              <SwiperSlide
+                key={article._id}
+                my={10}
+                container="true"
+                spacing={2}
+              >
+                <div>
+                  <img src={article?.imageUrl} alt="" />
+                  <Typography variant="h5" gutterBottom>
+                    {article?.title}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {article?.description.slice(0, 180)}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {article?.postedDate}
+                  </Typography>
+                </div>
+              </SwiperSlide>
+            ))}
+          </>
+        ) : (
+          <>
+            <p className=" text-center">No Service Available on this name</p>
+          </>
+        )}
       </Swiper>
     </>
   );

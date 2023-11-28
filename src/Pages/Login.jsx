@@ -24,6 +24,7 @@ const Login = () => {
         const email = data.user.email;
         const user = { email };
         axiosPublic.post("/jwt", user).then((res) => {
+          console.log(res.data);
           if (res.data.success) {
             navigate(location?.state ? location.state : "/");
           }
@@ -66,7 +67,7 @@ const Login = () => {
           })
           .then((res) => {
             console.log(res.data);
-            if (res.data.success) {
+            if (res.data) {
               navigate(location?.state ? location.state : "/");
             }
           });

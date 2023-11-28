@@ -1,16 +1,20 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, FormHelperText, TextField, Typography } from "@mui/material";
 import "../css/Login.css";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
 import Swal from "sweetalert2";
+import { imageUpload } from "../../Hook/imageUplode";
 
 const AddPublisher = () => {
   const axiosPublic = useAxiosPublic();
 
-  const handlePublisher = (event) => {
+  const handlePublisher = async (event) => {
     event.preventDefault();
     const form = event.target;
     const publisherName = form.publisherName.value;
-    const publisherLogo = form.publisherLogo.value;
+    const image = form.publisherLogo.files[0];
+    const imageData = await imageUpload(image);
+    const publisherLogo = imageData.display_url;
+
     const publisher = { publisherName, publisherLogo };
     axiosPublic
       .post("/publishers", publisher)
@@ -39,11 +43,13 @@ const AddPublisher = () => {
           variant="outlined"
           fullWidth
         />
+        <FormHelperText> Publisher Logo </FormHelperText>
         <TextField
-          type="text"
+          type="file"
+          accept="image/*"
+          required
           name="publisherLogo"
           id="publisherLogo"
-          label="Publisher Logo"
           variant="outlined"
           fullWidth
         />
