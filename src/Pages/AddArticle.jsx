@@ -33,7 +33,6 @@ const AddArticle = () => {
   const authorEmail = user?.email;
   const authorPhoto = user?.photoURL;
 
-  console.log(typeof postedDate);
   const handleAddArticle = async (event) => {
     event.preventDefault();
     const form = event.target;
