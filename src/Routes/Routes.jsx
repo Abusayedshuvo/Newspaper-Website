@@ -15,6 +15,7 @@ import PrivateRoutes from "../Routes/PrivateRoutes.jsx";
 import AdminRoutes from "./AdminRoutes.jsx";
 import Subscription from "../Pages/Subscription.jsx";
 import PremiumArticle from "../Pages/PremiumArticle.jsx";
+import MyProfile from "../Pages/MyProfile.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ export const router = createBrowserRouter([
       {
         path: "/premium-articles",
         element: <PremiumArticle></PremiumArticle>,
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoutes>
+            <MyProfile></MyProfile>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/login",

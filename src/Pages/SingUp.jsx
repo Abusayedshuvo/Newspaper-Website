@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import { GitHub, Google } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../Hook/useAxiosPublic";
+import { imageUpload } from "../Hook/imageUplode";
 
 const SingUp = () => {
   const axiosPublic = useAxiosPublic();
@@ -15,21 +16,22 @@ const SingUp = () => {
   const { createUser } = useContext(AuthContext);
   const [error, setError] = useState("");
 
-  const handleRegistration = (event) => {
+  const handleRegistration = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const photo = form.photo.value;
-
-    // if (password.length < 6) {
-    //   setError("Password at least 6 charter");
-    //   return;
-    // } else if (!/^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/.test(password)) {
-    //   setError("Password need a capital letter and a special character");
-    //   return;
-    // }
+    const photo = form.photo.files[0];
+    const imageData = await imageUpload(photo);
+    const imageUrl = imageData.display_url;
+    if (password.length < 6) {
+      setError("Password at least 6 charter");
+      return;
+    } else if (!/^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/.test(password)) {
+      setError("Password need a capital letter and a special character");
+      return;
+    }
     setError("");
     createUser(email, password)
       .then((result) => {
@@ -37,15 +39,13 @@ const SingUp = () => {
         event.target.reset();
         updateProfile(result.user, {
           displayName: name,
-          photoURL: photo,
+          photoURL: imageUrl,
         });
         const userInfo = {
-          name: result?.user?.displayName,
-          email: result?.user?.email,
-          photo: result?.user?.photoURL,
+          name: name,
+          email: email,
+          photo: imageUrl,
         };
-        console.log(result.user.displayName);
-        console.log(result.user);
 
         axiosPublic.post("/users", userInfo).then((data) => {
           if (data.status) {
@@ -151,10 +151,11 @@ const SingUp = () => {
               fullWidth
             />
             <TextField
-              type="text"
+              type="file"
               name="photo"
+              accept="image/*"
+              required
               id="photo"
-              label="Photo URL"
               variant="outlined"
               fullWidth
             />
@@ -174,10 +175,11 @@ const SingUp = () => {
               variant="outlined"
               fullWidth
             />
-
-            <Button type="submit" size="lg">
-              Login
-            </Button>
+            <Typography my={5} textAlign="center">
+              <Button type="submit" size="lg">
+                Sing Up
+              </Button>
+            </Typography>
           </form>
 
           <Typography textAlign="center">
@@ -189,8 +191,18 @@ const SingUp = () => {
             </Typography>
           )}
 
-          <Box mt={5} component="div" sx={{ display: "block" }}>
-            <Button onClick={handleGoogle} type="submit" size="lg">
+          <Box
+            textAlign="center"
+            mt={5}
+            component="div"
+            sx={{ display: "block" }}
+          >
+            <Button
+              style={{ marginRight: "50px" }}
+              onClick={handleGoogle}
+              type="submit"
+              size="lg"
+            >
               <Google></Google>
             </Button>
             <Button onClick={handleGithub} type="submit" size="lg">

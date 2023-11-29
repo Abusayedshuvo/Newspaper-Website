@@ -72,7 +72,6 @@ const Login = () => {
             withCredentials: true,
           })
           .then((res) => {
-            console.log(res.data);
             if (res.data) {
               navigate(location?.state ? location.state : "/");
             }
