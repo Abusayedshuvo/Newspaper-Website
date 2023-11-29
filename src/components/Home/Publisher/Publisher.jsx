@@ -29,12 +29,14 @@ const Publisher = () => {
           <>
             <Grid my={10} container spacing={2}>
               {data?.data?.publishers?.map((publisher) => (
-                <div key={publisher._id}>
-                  <Typography variant="h5">
-                    {publisher.publisherName}
-                  </Typography>
-                  <img width="200px" src={publisher.publisherLogo} alt="" />
-                </div>
+                <Grid key={publisher._id} item xs={3}>
+                  <div style={{ margin: "0 20px" }}>
+                    <img width="150px" src={publisher.publisherLogo} alt="" />
+                    <Typography variant="h6">
+                      {publisher.publisherName}
+                    </Typography>
+                  </div>
+                </Grid>
               ))}
             </Grid>
           </>

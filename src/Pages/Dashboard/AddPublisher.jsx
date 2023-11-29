@@ -21,7 +21,13 @@ const AddPublisher = () => {
       .then((data) => {
         console.log(data);
         if (data.status) {
-          Swal.fire("Publisher Info Added Successful", "success");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Publisher Info Added Successful",
+            showConfirmButton: false,
+            timer: 1200,
+          });
           form.reset();
         }
       })

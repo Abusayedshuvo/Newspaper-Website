@@ -56,7 +56,13 @@ const Login = () => {
     const password = form.password.value;
     loginUser(email, password)
       .then(() => {
-        Swal.fire("Log In Success!", "", "success");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Log In Success!",
+          showConfirmButton: false,
+          timer: 1200,
+        });
         event.target.reset();
         setError("");
         // jwt token

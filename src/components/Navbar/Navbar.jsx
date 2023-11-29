@@ -64,7 +64,15 @@ function Navbar() {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => Swal.fire("Log out Success!", "", "success"))
+      .then(() =>
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Log out success",
+          showConfirmButton: false,
+          timer: 1200,
+        })
+      )
       .then((error) => {
         console.log(error);
       });
@@ -137,12 +145,14 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             {user ? (
               <>
-                <Link to="/profile">
-                  <Avatar alt={user?.displayName} src={user?.photoURL} />
-                </Link>
-                <Button onClick={handleLogOut} style={linkStyle}>
-                  Logout
-                </Button>
+                <div style={{ display: "flex" }}>
+                  <Link to="/profile">
+                    <Avatar alt={user?.displayName} src={user?.photoURL} />
+                  </Link>
+                  <Button onClick={handleLogOut} style={linkStyle}>
+                    Logout
+                  </Button>
+                </div>
               </>
             ) : (
               <Link style={linkStyle} to="/login">
