@@ -7,6 +7,9 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import "./css/AddArticle.css";
 import ReactSelect from "../components/ReactSelect/ReactSelect";
 import Publisher from "../components/ReactSelect/Publisher";
@@ -20,6 +23,8 @@ const AddArticle = () => {
   const axiosPublic = useAxiosPublic();
   const [publisher, setPublisher] = useState(null);
   const [tags, setTags] = useState(null);
+  const [isPremium, setIsPremium] = useState(false);
+
   const { user } = useAuth();
 
   const status = "pending";
@@ -40,6 +45,7 @@ const AddArticle = () => {
     const publishe = publisher.value;
     const tag = tags;
     const description = form.description.value;
+    const premium = isPremium;
     const image = form.image.files[0];
     const imageData = await imageUpload(image);
     const imageUrl = imageData.display_url;
@@ -54,6 +60,7 @@ const AddArticle = () => {
       authorName,
       authorEmail,
       authorPhoto,
+      premium,
     };
 
     axiosPublic
@@ -123,6 +130,26 @@ const AddArticle = () => {
                 variant="outlined"
                 label="Your Text Here"
               />
+            </Grid>
+            <Grid xs={6} item={true}>
+              <FormGroup
+                style={{
+                  border: "solid 1px #ddd",
+                  padding: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="isPremium"
+                      checked={isPremium}
+                      onChange={(e) => setIsPremium(e.target.checked)}
+                    />
+                  }
+                  label="Premium Article"
+                />
+              </FormGroup>
             </Grid>
 
             <Grid xs={12} item={true}>

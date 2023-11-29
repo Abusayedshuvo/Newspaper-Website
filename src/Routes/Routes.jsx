@@ -13,6 +13,8 @@ import Articles from "../Pages/Dashboard/Articles.jsx";
 import AddPublisher from "../Pages/Dashboard/AddPublisher.jsx";
 import PrivateRoutes from "../Routes/PrivateRoutes.jsx";
 import AdminRoutes from "./AdminRoutes.jsx";
+import Subscription from "../Pages/Subscription.jsx";
+import PremiumArticle from "../Pages/PremiumArticle.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,14 @@ export const router = createBrowserRouter([
       {
         path: "/articles/:id",
         element: <ArticleDetails></ArticleDetails>,
+      },
+      {
+        path: "/subscription",
+        element: <Subscription></Subscription>,
+      },
+      {
+        path: "/premium-articles",
+        element: <PremiumArticle></PremiumArticle>,
       },
       {
         path: "/login",

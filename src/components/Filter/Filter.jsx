@@ -28,11 +28,13 @@ const Filter = ({
   }));
 
   const tags = [
-    { value: "chocolate" },
-    { value: "strawberry" },
-    { value: "vanilla" },
+    { value: "world", label: "world" },
+    { value: "business", label: "business" },
+    { value: "politics", label: "politics" },
+    { value: "travel", label: "travel" },
+    { value: "life-style", label: "life-style" },
+    { value: "sports", label: "sports" },
   ];
-
   if (isLoading) {
     return <Loading></Loading>;
   }

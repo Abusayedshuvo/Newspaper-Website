@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import { FormHelperText } from "@mui/material";
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "world", label: "world" },
+  { value: "business", label: "business" },
+  { value: "politics", label: "politics" },
+  { value: "travel", label: "travel" },
+  { value: "life-style", label: "life-style" },
+  { value: "sports", label: "sports" },
 ];
 
 export default function ReactSelect({ setTags, tags }) {

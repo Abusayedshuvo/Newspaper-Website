@@ -14,6 +14,7 @@ const AllArticles = () => {
   const [search, setSearch] = useState("");
   const [filterPublisher, setFilterPublisher] = useState([]);
   const [filterTag, setFilterTag] = useState([]);
+
   const getArticles = async () => {
     const res = await axiosPublic.get(`/articles`);
     return res;
