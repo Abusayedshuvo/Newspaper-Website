@@ -25,14 +25,33 @@ export default function Publisher({ publisher, setPublisher }) {
   if (isLoading) {
     return <Loading></Loading>;
   }
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "#000",
+      color: "white",
+      padding: 10,
+      zIndex: 10,
+    }),
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "#fff",
+      color: "white",
+      zIndex: 10,
+    }),
+  };
 
   return (
-    <div className="App">
+    <div style={{ width: "100%", zIndex: 10 }} className="App">
       <FormHelperText> Select Publisher </FormHelperText>
       <Select
+        styles={customStyles}
         defaultValue={publisher}
         onChange={setPublisher}
         options={options}
+        style={{
+          zIndex: 99,
+        }}
       />
     </div>
   );
