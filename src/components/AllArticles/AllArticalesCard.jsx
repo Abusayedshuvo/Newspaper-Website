@@ -6,9 +6,18 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { CardMedia, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../../Hook/useAxiosPublic";
 
 const AllArticalesCard = ({ article }) => {
   const { _id, title, publishe, tag, description, imageUrl } = article;
+  const axiosPublic = useAxiosPublic();
+  const handleLearnMore = async () => {
+    try {
+      await axiosPublic.patch(`/articles/${_id}/update-views`);
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
   return (
     <>
       <Grid xs={6} item={true}>
@@ -37,7 +46,9 @@ const AllArticalesCard = ({ article }) => {
           </CardContent>
           <CardActions>
             <Link to={`/articles/${_id}`}>
-              <Button size="small">Learn More</Button>
+              <Button onClick={handleLearnMore} size="small">
+                Learn More
+              </Button>
             </Link>
           </CardActions>
         </Card>

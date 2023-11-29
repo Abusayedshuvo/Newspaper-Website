@@ -27,7 +27,7 @@ const ArticleDetails = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
-  const { title, publishe, tag, description, image } = data.data;
+  const { title, publishe, tag, description, imageUrl } = data.data;
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -35,7 +35,7 @@ const ArticleDetails = () => {
           <CardMedia
             component="img"
             height="194"
-            image={image}
+            image={imageUrl}
             alt="Paella dish"
           />
           <CardActions>

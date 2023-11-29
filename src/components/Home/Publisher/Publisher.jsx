@@ -28,7 +28,7 @@ const Publisher = () => {
         {data?.data?.publishers?.length > 0 ? (
           <>
             <Grid my={10} container spacing={2}>
-              {data?.data?.publishers?.map((publisher) => (
+              {data?.data?.publishers?.slice(0, 6).map((publisher) => (
                 <Grid key={publisher._id} item xs={3}>
                   <div style={{ margin: "0 20px" }}>
                     <img width="150px" src={publisher.publisherLogo} alt="" />
