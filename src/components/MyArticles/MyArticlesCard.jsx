@@ -4,11 +4,9 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 
-const MyArticlesCard = ({ articles, index }) => {
+const MyArticlesCard = ({ articles, index, handleDelete }) => {
   const { _id, title, status, premium } = articles;
-  const handleDelete = () => {
-    console.log("Delete");
-  };
+
   return (
     <>
       <TableBody>
@@ -32,10 +30,8 @@ const MyArticlesCard = ({ articles, index }) => {
 
 MyArticlesCard.propTypes = {
   articles: PropTypes.object,
-};
-
-MyArticlesCard.propTypes = {
   index: PropTypes.number,
+  handleDelete: PropTypes.func,
 };
 
 export default MyArticlesCard;

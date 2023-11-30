@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading/Loading";
 import useAuth from "../Hook/useAuth";
 import MyArticlesCard from "../components/MyArticles/MyArticlesCard";
+import Swal from "sweetalert2";
 
 const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
@@ -24,6 +25,20 @@ const MyArticles = () => {
     queryKey: ["articles"],
     queryFn: getArticles,
   });
+
+  const handleDelete = async (_id) => {
+    const response = await axiosSecure.delete(`/articles/${_id}`);
+    console.log(response);
+    refetch();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Article is Deleted",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -56,6 +71,7 @@ const MyArticles = () => {
                       articles={articles}
                       refetch={refetch}
                       index={index}
+                      handleDelete={handleDelete}
                     ></MyArticlesCard>
                   ))}
                 </Table>
