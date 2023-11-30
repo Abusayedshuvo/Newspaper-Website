@@ -16,6 +16,7 @@ import AdminRoutes from "./AdminRoutes.jsx";
 import Subscription from "../Pages/Subscription.jsx";
 import PremiumArticle from "../Pages/PremiumArticle.jsx";
 import MyProfile from "../Pages/MyProfile.jsx";
+import MyArticles from "../Pages/MyArticles.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: "/premium-articles",
         element: <PremiumArticle></PremiumArticle>,
+      },
+      {
+        path: "/my-articles",
+        element: <MyArticles></MyArticles>,
       },
       {
         path: "/profile",

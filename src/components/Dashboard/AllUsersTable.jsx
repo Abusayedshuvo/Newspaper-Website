@@ -32,7 +32,7 @@ const AllUsersTable = ({ users, refetch }) => {
           </TableCell>
           <TableCell align="right">{email}</TableCell>
           <TableCell align="right">
-            <img src={photo} alt="" />
+            <img width="80px" src={photo} alt="" />
           </TableCell>
           <TableCell align="right">
             {users?.role === "admin" ? (

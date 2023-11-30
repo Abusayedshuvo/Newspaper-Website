@@ -44,6 +44,9 @@ function Navbar() {
       <Link style={linkStyle} to="/premium-articles">
         Premium Articles
       </Link>
+      <Link style={linkStyle} to="/my-articles">
+        My Articles
+      </Link>
       {user && isAdmin && (
         <Link style={linkStyle} to="/dashboard">
           Dashboard

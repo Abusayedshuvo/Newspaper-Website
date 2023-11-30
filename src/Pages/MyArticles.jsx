@@ -1,28 +1,29 @@
+import { Helmet } from "react-helmet";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
-import Loading from "../../components/Loading/Loading";
-import { Helmet } from "react-helmet";
+import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import { Container, Grid } from "@mui/material";
-import ArticlesTable from "../../components/Dashboard/ArticlesTable";
+import useAxiosSecure from "../Hook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../components/Loading/Loading";
+import useAuth from "../Hook/useAuth";
+import MyArticlesCard from "../components/MyArticles/MyArticlesCard";
 
-const Articles = () => {
+const MyArticles = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const getArticles = async () => {
-    const res = await axiosSecure.get(`/articles`);
+    const res = await axiosSecure.get(`/articles/user/${user.email}`);
     return res;
   };
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["articles"],
     queryFn: getArticles,
   });
-
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -30,8 +31,10 @@ const Articles = () => {
   return (
     <>
       <Helmet>
-        <title> Dashboard || All Articles</title>
+        <title> Synergy Press || My Article</title>
       </Helmet>
+      <Breadcrumb title="My Article"></Breadcrumb>
+
       <Container>
         {data?.data?.length > 0 ? (
           <>
@@ -40,22 +43,20 @@ const Articles = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
+                      <TableCell>No</TableCell>
                       <TableCell>Article Title</TableCell>
-                      <TableCell> Author Name </TableCell>
-                      <TableCell>Author Email</TableCell>
-                      <TableCell>Author Photo</TableCell>
-                      <TableCell>Posted Date</TableCell>
                       <TableCell>Status</TableCell>
-                      <TableCell>Publisher</TableCell>
+                      <TableCell> Is Premium </TableCell>
                       <TableCell>Action</TableCell>
                     </TableRow>
                   </TableHead>
-                  {data?.data?.map((articles) => (
-                    <ArticlesTable
+                  {data?.data?.map((articles, index) => (
+                    <MyArticlesCard
                       key={articles._id}
                       articles={articles}
                       refetch={refetch}
-                    ></ArticlesTable>
+                      index={index}
+                    ></MyArticlesCard>
                   ))}
                 </Table>
               </TableContainer>
@@ -71,4 +72,4 @@ const Articles = () => {
   );
 };
 
-export default Articles;
+export default MyArticles;
