@@ -14,7 +14,6 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Article, Home, PeopleAlt, Publish } from "@mui/icons-material";
-import Charts from "../../components/Dashboard/Charts";
 
 const drawerWidth = 240;
 
@@ -29,6 +28,14 @@ const Dashboard = () => {
       <Toolbar />
       <Divider />
       <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <PeopleAlt></PeopleAlt>
+            </ListItemIcon>
+            <Link to="./home">Dashboard</Link>
+          </ListItemButton>
+        </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -143,8 +150,6 @@ const Dashboard = () => {
           >
             <Toolbar />
             <Outlet></Outlet>
-
-            <Charts></Charts>
           </Box>
         </Box>
       </div>

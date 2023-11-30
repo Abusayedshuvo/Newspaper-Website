@@ -16,7 +16,7 @@ const AllArticles = () => {
   const [filterTag, setFilterTag] = useState([]);
 
   const getArticles = async () => {
-    const res = await axiosPublic.get(`/articles`);
+    const res = await axiosPublic.get(`/articles/approved`);
     return res;
   };
 
@@ -68,7 +68,6 @@ const AllArticles = () => {
     const searchInput = document.getElementById("search-field");
     setSearch(searchInput.value);
   };
-
   return (
     <>
       <Helmet>

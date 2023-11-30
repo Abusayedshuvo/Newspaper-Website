@@ -16,7 +16,7 @@ const Trending = () => {
   const axiosPublic = useAxiosPublic();
 
   const getArticles = async () => {
-    const res = await axiosPublic.get(`/articles`);
+    const res = await axiosPublic.get(`/articles/approved`);
     return res;
   };
 

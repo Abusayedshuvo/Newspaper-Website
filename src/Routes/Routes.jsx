@@ -7,7 +7,6 @@ import AllArticles from "../Pages/AllArticles.jsx";
 import ArticleDetails from "../Pages/ArticleDetails.jsx";
 import Login from "../Pages/Login.jsx";
 import SingUp from "../Pages/SingUp.jsx";
-import Dashboard from "../Pages/Dashboard/dashboard.jsx";
 import AllUsers from "../Pages/Dashboard/AllUsers.jsx";
 import Articles from "../Pages/Dashboard/Articles.jsx";
 import AddPublisher from "../Pages/Dashboard/AddPublisher.jsx";
@@ -17,6 +16,8 @@ import Subscription from "../Pages/Subscription.jsx";
 import PremiumArticle from "../Pages/PremiumArticle.jsx";
 import MyProfile from "../Pages/MyProfile.jsx";
 import MyArticles from "../Pages/MyArticles.jsx";
+import Dashboard from "../Pages/Dashboard/Dashboard.jsx";
+import DashboardHome from "../Pages/Dashboard/DashboardHome.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ export const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
+      {
+        path: "home",
+        element: <DashboardHome></DashboardHome>,
+      },
       {
         path: "users",
         element: (

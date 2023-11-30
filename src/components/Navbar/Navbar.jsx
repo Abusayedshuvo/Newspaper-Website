@@ -48,7 +48,7 @@ function Navbar() {
         My Articles
       </Link>
       {user && isAdmin && (
-        <Link style={linkStyle} to="/dashboard">
+        <Link style={linkStyle} to="/dashboard/home">
           Dashboard
         </Link>
       )}
