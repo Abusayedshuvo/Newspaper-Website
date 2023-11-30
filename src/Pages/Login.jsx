@@ -69,7 +69,7 @@ const Login = () => {
         const user = { email };
         axiosPublic
           .post("/jwt", user, {
-            withCredentials: true,
+            // withCredentials: true,
           })
           .then((res) => {
             if (res.data) {
@@ -95,7 +95,7 @@ const Login = () => {
           <TextField
             type="email"
             name="email"
-            id="outlined-basic"
+            id="email"
             label="Email"
             variant="outlined"
             fullWidth
@@ -103,29 +103,38 @@ const Login = () => {
           <TextField
             type="password"
             name="password"
-            id="outlined-basic"
+            id="password"
             label="Password"
             variant="outlined"
             fullWidth
           />
-
-          <Button type="submit" size="lg">
-            Login
-          </Button>
+          <Typography my={5} textAlign="center">
+            <Button type="submit" size="lg">
+              Login
+            </Button>
+          </Typography>
         </form>
-
-        <Typography textAlign="center">
-          Don't have an account? <Link to="/singup"> Register Here</Link>
-        </Typography>
-
         {error && (
           <Typography className="text-red" textAlign="center">
             {error}
           </Typography>
         )}
+        <Typography textAlign="center">
+          Don't have an account? <Link to="/singup"> Register Here</Link>
+        </Typography>
 
-        <Box mt={5} component="div" sx={{ display: "block" }}>
-          <Button onClick={handleGoogle} type="submit" size="lg">
+        <Box
+          textAlign="center"
+          mt={5}
+          component="div"
+          sx={{ display: "block" }}
+        >
+          <Button
+            style={{ marginRight: "50px" }}
+            onClick={handleGoogle}
+            type="submit"
+            size="lg"
+          >
             <Google></Google>
           </Button>
           <Button onClick={handleGithub} type="submit" size="lg">

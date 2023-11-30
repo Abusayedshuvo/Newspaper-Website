@@ -182,14 +182,14 @@ const SingUp = () => {
             </Typography>
           </form>
 
-          <Typography textAlign="center">
-            Already have an account? <Link to="/singup"> Login Here</Link>
-          </Typography>
           {error && (
             <Typography className="text-red" textAlign="center">
               {error}
             </Typography>
           )}
+          <Typography textAlign="center">
+            Already have an account? <Link to="/login"> Login Here</Link>
+          </Typography>
 
           <Box
             textAlign="center"

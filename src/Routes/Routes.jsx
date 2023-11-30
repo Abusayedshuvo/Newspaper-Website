@@ -54,7 +54,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/my-articles",
-        element: <MyArticles></MyArticles>,
+        element: (
+          <PrivateRoutes>
+            <MyArticles></MyArticles>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/profile",
@@ -100,7 +104,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "publisher",
-        element: <AddPublisher></AddPublisher>,
+        element: (
+          <AdminRoutes>
+            <AddPublisher></AddPublisher>
+          </AdminRoutes>
+        ),
       },
     ],
   },
